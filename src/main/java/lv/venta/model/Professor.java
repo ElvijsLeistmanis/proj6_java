@@ -24,23 +24,13 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class Professor {
+public class Professor extends Person{
 	
 	@Setter(value = AccessLevel.NONE)
 	@Column(name = "Pid")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long pid;
-	
-	@Column(name = "Name")
-	@NotNull
-	@Pattern(regexp = "[A-Z]{1}[a-z]{2,20}")
-	private String name;
-	
-	@Column(name = "Surname")
-	@NotNull
-	@Pattern(regexp = "[A-Z]{1}[a-z]{2,20}")
-	private String surname;
 	
 	@Column(name = "Degree")
 	@Enumerated(EnumType.STRING)
@@ -52,8 +42,7 @@ public class Professor {
 	private Course course;
 	
 	public Professor(String name, String surname, Degree degree) {
-		setName(name);
-		setSurname(surname);
+		super(name, surname);
 		setDegree(degree);
 	}
 }
