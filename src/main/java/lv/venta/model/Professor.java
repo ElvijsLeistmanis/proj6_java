@@ -26,11 +26,7 @@ import lombok.ToString;
 @ToString
 public class Professor extends Person{
 	
-	@Setter(value = AccessLevel.NONE)
-	@Column(name = "Pid")
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long pid;
+	//ID is inherited from Person class
 	
 	@Column(name = "Degree")
 	@Enumerated(EnumType.STRING)
