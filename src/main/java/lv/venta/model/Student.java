@@ -49,7 +49,7 @@ public class Student {
 	@ToString.Exclude
 	private Collection<Grade> grades = new ArrayList<Grade>();
 	
-	private Student(String name, String surname) {
+	public Student(String name, String surname) {
 		setName(name);
 		setSurname(surname);
 	}

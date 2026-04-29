@@ -45,7 +45,7 @@ public class Grade {
 	@JoinColumn(name = "Cid")
 	private Course course;
 	
-	private Grade(int gradeValue, Student student, Course course) {
+	public Grade(int gradeValue, Student student, Course course) {
 		setGradeValue(gradeValue);
 		setStudent(student);
 		setCourse(course);
