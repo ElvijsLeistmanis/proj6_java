@@ -3,12 +3,16 @@ package lv.venta.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.hibernate.annotations.ManyToAny;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -49,10 +53,10 @@ public class Course {
 	@Column(name = "CreditPoints")
 	private int creditPoints;
 	
-	@OneToOne
-	//joincolumn ir ar id no otras klases
-	@JoinColumn(name = "Pid")
-	private Professor professor;
+	@ManyToMany
+	@JoinTable(name="ProfCourseTable", joinColumns = @JoinColumn(name ="Pid"),
+	inverseJoinColumns = @JoinColumn(name = "Cid"))
+	private Collection<Professor> professors = new ArrayList<Professor>();
 	
 	@OneToMany(mappedBy = "course")
 	@ToString.Exclude
@@ -62,9 +66,25 @@ public class Course {
 	public Course(String title, int creditPoints, Professor professor) {
 		setTitle(title);
 		setCreditPoints(creditPoints);
-		setProfessor(professor);
+		
+		try {
+			addProfessor(professor);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	
+	public void addProfessor (Professor professor) throws Exception {
+		if (professor == null) {
+			throw new Exception("cannot be null");
+		}
+		
+		if (professors.contains(professor)) {
+			throw new Exception("professor already exists");
+		}
+		
+		professors.add(professor);
+	}
 
 }
